@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <radialGradient id="bgGrad" cx="50%" cy="45%" r="65%">
+      <stop offset="0%" stop-color="#0E3532" />
+      <stop offset="55%" stop-color="#071F20" />
+      <stop offset="100%" stop-color="#02080A" />
+    </radialGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FEF08A" />
+      <stop offset="50%" stop-color="#F59E0B" />
+      <stop offset="100%" stop-color="#B45309" />
+    </linearGradient>
+    <linearGradient id="hullGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F8FAFC" />
+      <stop offset="55%" stop-color="#CBD5E1" />
+      <stop offset="100%" stop-color="#475569" />
+    </linearGradient>
+  </defs>
+
+  <!-- Full-bleed dark space background -->
+  <rect width="512" height="512" rx="96" fill="url(#bgGrad)" />
+
+  <!-- Outer Glowing Teal Shield Aura Ring -->
+  <circle cx="256" cy="246" r="154" fill="rgba(20, 241, 217, 0.1)" stroke="#14F1D9" stroke-width="10" />
+  <circle cx="256" cy="246" r="126" fill="none" stroke="#F59E0B" stroke-width="4" stroke-dasharray="18 12" />
+
+  <!-- Engine Exhaust Plume -->
+  <polygon points="236,330 256,418 276,330" fill="#00F0FF" opacity="0.85" />
+  <circle cx="256" cy="340" r="14" fill="#FFFFFF" />
+
+  <!-- Iconic Swept-Wing Starfighter -->
+  <g transform="translate(256, 236) rotate(-90) scale(3.2)">
+    <polygon
+      points="38,0 7,-10 -12,-31 -19,-11 -30,-15 -24,0 -30,15 -19,11 -12,31 7,10"
+      fill="url(#hullGrad)"
+      stroke="#0F172A"
+      stroke-width="2.2"
+    />
+    <ellipse cx="4" cy="0" rx="9" ry="4.5" fill="#0F172A" />
+  </g>
+
+  <!-- FLEET.IO Badge Text -->
+  <text
+    x="256"
+    y="458"
+    text-anchor="middle"
+    fill="url(#goldGrad)"
+    font-family="Orbitron, Arial, sans-serif"
+    font-weight="900"
+    font-size="52"
+    letter-spacing="4"
+  >
+    FLEET.IO
+  </text>
+</svg>

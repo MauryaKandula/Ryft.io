@@ -1,0 +1,241 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root,
+  [data-faction-theme="blue"] {
+    --font-display: 'Chakra Petch', 'Orbitron', system-ui, sans-serif;
+    --font-sans: 'Rajdhani', 'Share Tech Mono', system-ui, sans-serif;
+    --font-mono: 'Share Tech Mono', 'JetBrains Mono', monospace;
+
+    --cp-bg-image: url('/assets/blackwall_blue.png');
+    --cp-bg-base: #02050D;
+    --cp-surface-dark: rgba(3, 10, 26, 0.88);
+    --cp-surface-panel: rgba(3, 12, 30, 0.86);
+    --cp-surface-card: rgba(4, 15, 36, 0.90);
+    --cp-row-odd: rgba(6, 24, 52, 0.72);
+    --cp-row-even: rgba(2, 10, 24, 0.82);
+
+    --cp-primary: #00F0FF;
+    --cp-primary-bright: #A5F3FC;
+    --cp-secondary: #38BDF8;
+    --cp-accent: #2563EB;
+    --cp-glow-rgba: rgba(0, 240, 255, 0.42);
+    --cp-glow-soft: rgba(56, 189, 248, 0.22);
+    --cp-grid-line: rgba(0, 240, 255, 0.16);
+    --cp-text-main: #E0F2FE;
+  }
+
+  [data-faction-theme="red"] {
+    --cp-bg-image: url('/assets/blackwall_red.png');
+    --cp-bg-base: #090104;
+    --cp-surface-dark: rgba(24, 3, 10, 0.88);
+    --cp-surface-panel: rgba(28, 4, 12, 0.86);
+    --cp-surface-card: rgba(36, 5, 15, 0.90);
+    --cp-row-odd: rgba(52, 6, 20, 0.72);
+    --cp-row-even: rgba(24, 3, 10, 0.82);
+
+    --cp-primary: #FF003C;
+    --cp-primary-bright: #FDA4AF;
+    --cp-secondary: #FF2A6D;
+    --cp-accent: #E11D48;
+    --cp-glow-rgba: rgba(255, 0, 60, 0.46);
+    --cp-glow-soft: rgba(255, 42, 109, 0.24);
+    --cp-grid-line: rgba(255, 0, 60, 0.18);
+    --cp-text-main: #FFE4E6;
+  }
+
+  body {
+    font-family: var(--font-mono);
+    background-color: var(--cp-bg-base);
+    color: var(--cp-text-main);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: none;
+    overflow: hidden;
+  }
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ============================================================================
+   HD CYBERPUNK 2077 BLACKWALL & EDGERUNNERS FACTION-REACTIVE BACKGROUNDS
+   Automatically switches HD PNG background & neon grid between:
+   - BLUE FACTION (Vanguard Synapse / Edgerunners NetWatch Grid): /assets/blackwall_blue.png
+   - RED FACTION  (Nexus Protocol / Blackwall Rogue AI):          /assets/blackwall_red.png
+============================================================================ */
+.pf-hex-bg,
+.pf-hex-bg-cyber {
+  background-color: var(--cp-bg-base);
+  background-image:
+    linear-gradient(180deg, rgba(2, 4, 10, 0.62) 0%, rgba(2, 4, 10, 0.42) 45%, rgba(2, 4, 10, 0.78) 100%),
+    radial-gradient(circle at 50% 22%, var(--cp-glow-soft), transparent 64%),
+    repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.28) 0px,
+      rgba(0, 0, 0, 0.28) 1px,
+      transparent 1px,
+      transparent 3px
+    ),
+    linear-gradient(to right, var(--cp-grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--cp-grid-line) 1px, transparent 1px),
+    var(--cp-bg-image);
+  background-size: 100% 100%, 100% 100%, 100% 4px, 48px 48px, 48px 48px, cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  transition: background-image 0.35s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Primary Cyberpunk 2077 / Edgerunners Chamfered Neon Button */
+.pf-grid-btn {
+  position: relative;
+  background-color: var(--cp-surface-dark);
+  background-image:
+    linear-gradient(180deg, var(--cp-glow-soft) 0%, rgba(4, 6, 14, 0.72) 52%, var(--cp-glow-soft) 100%),
+    linear-gradient(to right, var(--cp-grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--cp-grid-line) 1px, transparent 1px);
+  background-size: 100% 100%, 24px 11px, 24px 11px;
+  border: 1.5px solid var(--cp-primary);
+  box-shadow:
+    0 0 18px var(--cp-glow-rgba),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    inset 0 0 18px var(--cp-glow-soft);
+  color: var(--cp-text-main);
+  text-shadow: 0 0 10px var(--cp-glow-rgba), 0 2px 2px rgba(0, 0, 0, 0.92);
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  transition: transform 0.1s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.pf-grid-btn:hover {
+  border-color: var(--cp-primary-bright);
+  box-shadow:
+    0 0 26px var(--cp-glow-rgba),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65),
+    inset 0 0 24px var(--cp-glow-rgba);
+}
+
+.pf-grid-btn:active {
+  transform: scale(0.985);
+}
+
+/* Secondary Cyberpunk Edgerunners Accent Button */
+.pf-grid-btn-cyan {
+  position: relative;
+  background-color: var(--cp-surface-card);
+  background-image:
+    linear-gradient(135deg, var(--cp-glow-rgba) 0%, rgba(5, 7, 18, 0.68) 55%, var(--cp-glow-soft) 100%),
+    linear-gradient(to right, var(--cp-grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--cp-grid-line) 1px, transparent 1px);
+  background-size: 100% 100%, 24px 11px, 24px 11px;
+  border: 1.5px solid var(--cp-secondary);
+  box-shadow:
+    0 0 18px var(--cp-glow-rgba),
+    inset 0 1px 0 rgba(255, 255, 255, 0.42),
+    inset 0 0 18px var(--cp-glow-soft);
+  color: #FFFFFF;
+  text-shadow: 0 0 10px var(--cp-glow-rgba), 0 2px 2px rgba(0, 0, 0, 0.92);
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+  transition: transform 0.1s ease, box-shadow 0.15s ease;
+}
+
+.pf-grid-btn-cyan:hover {
+  border-color: #FFFFFF;
+  box-shadow:
+    0 0 28px var(--cp-glow-rgba),
+    inset 0 0 24px var(--cp-glow-rgba);
+}
+
+/* Cyberpunk 2077 / Blackwall Holo-Deck Panel */
+.pf-panel {
+  background-color: var(--cp-surface-panel);
+  backdrop-filter: blur(10px);
+  background-image:
+    radial-gradient(circle at 50% 0%, var(--cp-glow-soft), transparent 70%),
+    linear-gradient(to right, var(--cp-grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--cp-grid-line) 1px, transparent 1px);
+  background-size: 100% 100%, 32px 32px, 32px 32px;
+  border: 1.5px solid var(--cp-primary);
+  box-shadow:
+    0 0 34px var(--cp-glow-rgba),
+    inset 0 0 28px var(--cp-glow-soft);
+}
+
+/* Cyberpunk Gridded Card Slot (Hangar Equipment Cards) */
+.pf-card-grid {
+  background-color: var(--cp-surface-card);
+  backdrop-filter: blur(6px);
+  background-image:
+    radial-gradient(circle at 50% 42%, var(--cp-glow-soft), transparent 70%),
+    linear-gradient(to right, var(--cp-grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--cp-grid-line) 1px, transparent 1px);
+  background-size: 100% 100%, 20px 12px, 20px 12px;
+  border: 1.5px solid var(--cp-secondary);
+  box-shadow:
+    0 0 14px var(--cp-glow-soft),
+    inset 0 0 20px var(--cp-glow-soft);
+}
+
+/* Striped Cyberpunk Telemetry Table Row */
+.pf-table-row {
+  border-bottom: 1px solid var(--cp-grid-line);
+}
+.pf-table-row:nth-child(odd) {
+  background-color: var(--cp-row-odd);
+}
+.pf-table-row:nth-child(even) {
+  background-color: var(--cp-row-even);
+}
+
+/* ============================================================================
+   DYNAMIC RED BLACKWALL FACTION PALETTE REMAPPING
+   When the player selects the RED Faction (Nexus Protocol / Blackwall AI),
+   all cyan/blue utility classes inside [data-faction-theme="red"] automatically
+   shift to Blackwall Crimson (#FF003C), Scarlet (#FF2A6D), and Dark Obsidian!
+============================================================================ */
+[data-faction-theme="red"] .text-cyan-100,
+[data-faction-theme="red"] .text-sky-100 {
+  color: #FFE4E6 !important;
+}
+[data-faction-theme="red"] .text-cyan-200,
+[data-faction-theme="red"] .text-sky-200 {
+  color: #FECDD3 !important;
+}
+[data-faction-theme="red"] .text-cyan-300,
+[data-faction-theme="red"] .text-sky-300,
+[data-faction-theme="red"] .text-indigo-300 {
+  color: #FF2A6D !important;
+}
+[data-faction-theme="red"] .text-cyan-400,
+[data-faction-theme="red"] .text-sky-400,
+[data-faction-theme="red"] .text-indigo-400 {
+  color: #FF003C !important;
+}
+[data-faction-theme="red"] .border-cyan-400,
+[data-faction-theme="red"] .border-cyan-500,
+[data-faction-theme="red"] .border-cyan-500\/80,
+[data-faction-theme="red"] .border-cyan-500\/70,
+[data-faction-theme="red"] .border-cyan-500\/60,
+[data-faction-theme="red"] .border-cyan-500\/50,
+[data-faction-theme="red"] .border-cyan-500\/40,
+[data-faction-theme="red"] .border-cyan-500\/30,
+[data-faction-theme="red"] .border-sky-400,
+[data-faction-theme="red"] .border-indigo-400 {
+  border-color: #FF003C !important;
+}
+[data-faction-theme="red"] .bg-cyan-400,
+[data-faction-theme="red"] .bg-cyan-300 {
+  background-color: #FF003C !important;
+  color: #FFFFFF !important;
+}
+[data-faction-theme="red"] .bg-\[\#030A1C\],
+[data-faction-theme="red"] .bg-\[\#030A1C\]\/95,
+[data-faction-theme="red"] .bg-\[\#030A1C\]\/90,
+[data-faction-theme="red"] .bg-\[\#051229\],
+[data-faction-theme="red"] .bg-\[\#041026\],
+[data-faction-theme="red"] .bg-\[\#041026\]\/90,
+[data-faction-theme="red"] .bg-\[\#051026\],
+[data-faction-theme="red"] .bg-\[\#081A38\] {
+  background-color: rgba(28, 3, 11, 0.92) !important;
+}

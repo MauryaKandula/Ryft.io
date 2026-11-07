@@ -1,0 +1,6 @@
+{
+  "name": "Pocket Fleet",
+  "description": "Real-time cyberpunk multiplayer .io space combat arena. Command Vanguard Synapse, Nexus Protocol, and Xeno-Helix starships, customize cannons and homing missiles in the Mothership hangar, and battle across four sector modes.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

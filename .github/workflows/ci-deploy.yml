@@ -1,0 +1,65 @@
+name: RYFT.io CI & Cloud Run Deployment
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  verify-and-test:
+    name: Typecheck, Multiplayer Tests & Production Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run TypeScript compiler verification (npm run lint)
+        run: npm run lint
+
+      - name: Run Automated Multiplayer & Security Integration Tests
+        run: npx tsx tests/multiplayer.test.ts
+
+      - name: Build Production Vite + PWA Bundle
+        run: npm run build
+
+  deploy-cloud-run:
+    name: Deploy to Google Cloud Run (Optional — runs when GCP secrets are configured)
+    needs: verify-and-test
+    if: github.ref == 'refs/heads/main' && vars.GCP_PROJECT_ID != ''
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Deploy container to Google Cloud Run with WebSocket affinity
+        uses: google-github-actions/deploy-cloudrun@v2
+        with:
+          service: ryft-io-server
+          region: ${{ vars.GCP_REGION || 'asia-northeast1' }}
+          source: .
+          flags: >-
+            --allow-unauthenticated
+            --port=3000
+            --session-affinity
+            --timeout=3600
+            --min-instances=1
+            --max-instances=10
+            --set-env-vars="NODE_ENV=production,PROJECT_ID=orb_arena_project"
