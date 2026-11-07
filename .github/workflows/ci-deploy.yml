@@ -32,6 +32,9 @@ jobs:
       - name: Build Production Vite + PWA Bundle
         run: npm run build
 
+      - name: Verify Docker image builds for Render
+        run: docker build --tag ryft-render-smoke .
+
   deploy-cloud-run:
     name: Deploy to Google Cloud Run (Optional — runs when GCP secrets are configured)
     needs: verify-and-test
