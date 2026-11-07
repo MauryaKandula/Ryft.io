@@ -472,6 +472,9 @@ async function startServer() {
       return res.status(400).json({ error: 'Missing transactionId, itemType, or itemId' });
     }
 
+    if (itemType === 'REWARDED_AD' || itemType === 'EXPANSION_PACK') {
+      return res.status(403).json({ error: 'Rewards and paid packs disabled pending server-side provider verification' });
+    }
     const result = accountStore.processAuthoritativePurchase({
       playerId: acc.playerId,
       transactionId,
@@ -552,8 +555,11 @@ async function startServer() {
   // ===========================================================================
   app.get('/api/admin/metrics', async (req, res) => {
     const requiredAdminToken = process.env.ADMIN_TOKEN;
-    if (requiredAdminToken) {
-      const provided = String(req.headers['x-admin-token'] || req.query.token || '');
+    if (!requiredAdminToken) {
+      return res.status(503).json({ error: 'Admin API disabled until ADMIN_TOKEN is configured' });
+    }
+    {
+      const provided = String(req.headers['x-admin-token'] || '');
       if (provided !== requiredAdminToken) {
         return res.status(403).json({ error: 'Valid X-Admin-Token required' });
       }
@@ -592,7 +598,10 @@ async function startServer() {
 
   app.post('/api/admin/refund', (req, res) => {
     const requiredAdminToken = process.env.ADMIN_TOKEN;
-    if (requiredAdminToken) {
+    if (!requiredAdminToken) {
+      return res.status(503).json({ error: 'Admin API disabled until ADMIN_TOKEN is configured' });
+    }
+    {
       const provided = String(req.headers['x-admin-token'] || '');
       if (provided !== requiredAdminToken) {
         return res.status(403).json({ error: 'Valid X-Admin-Token required' });
