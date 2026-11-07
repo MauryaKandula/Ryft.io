@@ -4,6 +4,9 @@
 FROM node:22-alpine AS builder
 WORKDIR /app
 
+# npm resolves at least one dependency through Git; Alpine does not ship git.
+RUN apk add --no-cache git ca-certificates
+
 COPY package.json ./
 RUN npm install --include=dev --no-audit --no-fund
 
