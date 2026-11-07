@@ -372,11 +372,10 @@ export class AuthoritativeAccountStore {
     );
 
     if (matched) {
-      if (matched.passwordHash && passwordHash && matched.passwordHash !== passwordHash) {
-        throw new Error('Invalid password for existing pilot account.');
-      }
-      if (passwordHash && !matched.passwordHash) {
-        matched.passwordHash = passwordHash;
+      // Never authenticate an existing legacy account without proof of ownership.
+      // Legacy accounts with no password require an authenticated recovery or account-linking flow.
+      if (!matched.passwordHash || !passwordHash || matched.passwordHash !== passwordHash) {
+        throw new Error('Invalid credentials. Please use your linked sign-in provider or account recovery.');
       }
       const session = this.createSession(matched.playerId);
       return { account: matched, session };
